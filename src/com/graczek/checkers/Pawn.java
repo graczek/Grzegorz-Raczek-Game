@@ -1,11 +1,20 @@
 package com.graczek.checkers;
 
-import javafx.scene.image.Image;
-
 public class Pawn {
 
-    private Image blackPawn = new Image("resources/blackpawn.png");
-    private Image redPawn = new Image("resources/redpawn.png");
+    private PawnColor pawnColor;
+    private int x;
+    private int y;
+
+    public Pawn(PawnColor pawnColor, int x, int y) {
+        this.pawnColor = pawnColor;
+        this.x = x;
+        this.y = y;
+    }
+
+    public PawnColor getPawnColor() {
+        return pawnColor;
+    }
 
 
 }

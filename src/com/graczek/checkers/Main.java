@@ -61,13 +61,14 @@ public class Main extends Application {
         imgRedPawn.setFitWidth(76);
         imgRedPawn.setFitHeight(76);
 
-        grid.getChildren().addAll(imgBlackPawn, imgBlackPawn1, imgBlackPawn2, imgBlackPawn3, imgBlackPawn4);
+        grid.getChildren().addAll(imgBlackPawn, imgBlackPawn1, imgBlackPawn2, imgBlackPawn3, imgBlackPawn4, imgRedPawn);
 
         GridPane.setConstraints(imgBlackPawn, 1, 0);
-        GridPane.setConstraints(imgBlackPawn1, 3, 1);
-        GridPane.setConstraints(imgBlackPawn2, 5, 2);
-        GridPane.setConstraints(imgBlackPawn3, 7, 3);
-        GridPane.setConstraints(imgBlackPawn4, 9, 4);
+        GridPane.setConstraints(imgBlackPawn1, 2, 1);
+        GridPane.setConstraints(imgBlackPawn2, 3, 2);
+        GridPane.setConstraints(imgBlackPawn3, 4, 3);
+        GridPane.setConstraints(imgBlackPawn4, 5, 4);
+        GridPane.setConstraints(imgRedPawn, 5, 5);
 
 
         Scene scene = new Scene(grid, 1200, 800, Color.TAN);
@@ -80,9 +81,5 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        Board board = new Board();
-        board.initializeEmptyBoard();
-        board.printBoard();
-
     }
 }
