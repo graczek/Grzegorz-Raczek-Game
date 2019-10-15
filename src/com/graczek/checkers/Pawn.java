@@ -16,5 +16,12 @@ public class Pawn {
         return pawnColor;
     }
 
-
+    @Override
+    public String toString() {
+        return "Pawn{" +
+                "pawnColor=" + pawnColor +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

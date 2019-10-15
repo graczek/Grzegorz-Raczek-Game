@@ -22,7 +22,21 @@ public class BoardField {
         this.pawn = pawn;
     }
 
+    public BoardFieldColor getBoardFieldColor() {
+        return boardFieldColor;
+    }
+
     public boolean isFieldEmpty(){
         return pawn == null;
+    }
+
+    @Override
+    public String toString() {
+        return "BoardField{" +
+                "pawn=" + pawn +
+                ", boardFieldColor=" + boardFieldColor +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
     }
 }
