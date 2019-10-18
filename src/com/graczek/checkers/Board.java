@@ -3,9 +3,6 @@ package com.graczek.checkers;
 import com.graczek.checkers.enums.BoardFieldColor;
 import com.graczek.checkers.enums.PawnColor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Board {
 
     //stores size of the checkers board
@@ -14,14 +11,8 @@ public class Board {
     //stores fields which form the board
     private BoardField[][] board = new BoardField[BOARD_SIZE][BOARD_SIZE];
 
-    private List<Move> moveHistory = new ArrayList<>();
-
     public BoardField[][] getBoard() {
         return board;
-    }
-
-    public List<Move> getMoveHistory() {
-        return moveHistory;
     }
 
     public void initializeEmptyBoard(){
@@ -86,6 +77,10 @@ public class Board {
 
     public Pawn getPawn(int x, int y){
         return board[x][y].getPawn();
+    }
+
+    public void setPawn(Pawn pawn, int x, int y) {
+        board[x][y].setPawn(pawn);
     }
 
 }

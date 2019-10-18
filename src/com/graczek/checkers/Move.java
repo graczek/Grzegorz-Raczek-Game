@@ -51,60 +51,24 @@ public class Move {
         this.movedPawn = movedPawn;
     }
 
-//    public Move performMove(Coordinate from, Coordinate to) throws InvalidMoveException {
-//        //Move move = validateMove(from, to);
-//        makeRegularMove(move);
-//        return move;
-//    }
+    private MoveType chooseMoveType() throws InvalidMoveException {
+        Pawn pawnToBeMoved = board.getPawnAt(from);
+        Pawn pawnAtDestination = board.getPawnAt(to);
+
+        if(pawnAtDestination == null){
+            return MoveType.NORMAL;
+        }
+        if(pawnAtDestination.getPawnColor().equals(pawnToBeMoved.getPawnColor())) {
+            throw new InvalidMoveException();
+        }
+        return MoveType.CAPTURE;
+    }
 
     private void makeRegularMove(Move move) {
         movedPawn = this.board.getPawnAt(move.getFrom());
         this.board.setPawnAt(null, move.getFrom());
         this.board.setPawnAt(movedPawn, move.getTo());
-
-        //perfromPromotion(move, movedPawn);
     }
-
-//    private Move validateMove(Coordinate from, Coordinate to, Board board, PawnColor nextMoveColor) throws InvalidMoveException {//        if(from.getX() < 0 || from.getX() >= Board.BOARD_SIZE || from.getY() < 0 || from.getY() >= Board.BOARD_SIZE) {
-//        nextMoveColor = calculateNextMoveColor();
-//        Move move = validator.validate() //tu wroc
-//
-//        Pawn pawnFrom = board.getPawnAt(from);
-//        Pawn pawnTo = board.getPawnAt(to);
-
-
-        //            throw new InvalidMoveException();
-//        }
-//        movedPawn = board.getPawnAt(from);
-//        if(movedPawn == null){
-//            throw new InvalidMoveException();
-//        }
-//        MoveType moveType = checkAndReturnMoveType();
-//
-//
-//        return new Move(from, to, moveType, board.getPawnAt(from));
-//    }
-//
-//    private MoveType chooseMoveType() throws InvalidMoveException {
-//        Pawn pawnToBeMoved = board.getPawnAt(from);
-//        Pawn pawnAtDestination = board.getPawnAt(to);
-//
-//        if(pawnAtDestination == null){
-//            return MoveType.NORMAL;
-//        }
-//        if(pawnAtDestination.getPawnColor().equals(pawnToBeMoved.getPawnColor())) {
-//            throw new InvalidMoveException();
-//        }
-//
-//        return MoveType.CAPTURE;
-//    }
-
-//    private MoveType checkAndReturnMoveType() throws InvalidMoveException {
-//        checkIfCoordinatesNotTheSame();
-//        checkIfCoordinatesWithingBoardRange();
-//        isPawnToBeMovedCorrectColor();
-//        return chooseMoveType();
-//    }
 
     private void checkIfCoordinatesNotTheSame() throws InvalidMoveException {
         if(from.equals(to)) {
