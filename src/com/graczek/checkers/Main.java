@@ -1,7 +1,7 @@
 package com.graczek.checkers;
 
+import com.graczek.checkers.enums.PawnColor;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -17,30 +17,23 @@ public class Main extends Application {
     private Image redPawn = new Image("redpawn.png");
 
     private final int BOARD_SIZE = 8;
+    private final int FIELD_SIZE = 68;
+    private final int PAWN_SIZE = 68;
+
+    private Board board = new Board();
+
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
 
-        BackgroundSize backgroundSize = new BackgroundSize(730, 730, true, true, true, false);
+        BackgroundSize backgroundSize = new BackgroundSize(1200, 800, true, true, true, false);
         BackgroundImage backgroundImage = new BackgroundImage(backImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setGridLinesVisible(true);
-
         grid.setBackground(background);
-
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            grid.getColumnConstraints().add(new ColumnConstraints(68));
-            grid.getRowConstraints().add(new RowConstraints(68));
-        }
-
-        Board board = new Board();
-        board.initializeEmptyBoard();
-        board.initializeBoardWithStartingPawnSetup();
-
-        reprintBoard(grid, board);
 
         Scene scene = new Scene(grid, 630, 630, Color.TAN);
 
@@ -48,6 +41,16 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
+
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            grid.getColumnConstraints().add(new ColumnConstraints(FIELD_SIZE));
+            grid.getRowConstraints().add(new RowConstraints(FIELD_SIZE));
+        }
+
+        board.initializeEmptyBoard();
+        board.initializeBoardWithStartingPawnSetup();
+
+        reprintBoard(grid, board);
 
     }
 
@@ -66,11 +69,10 @@ public class Main extends Application {
     private ImageView createPawn (boolean isDark) {
         Image pawnImage = isDark ? blackPawn : redPawn;
         ImageView pawn = new ImageView(pawnImage);
-        pawn.setFitHeight(68);
-        pawn.setFitWidth(68);
+        pawn.setFitHeight(PAWN_SIZE);
+        pawn.setFitWidth(PAWN_SIZE);
         return pawn;
     }
-
 
     public static void main (String[]args){
         launch(args);

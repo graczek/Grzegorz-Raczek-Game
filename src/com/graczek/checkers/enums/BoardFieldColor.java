@@ -1,4 +1,4 @@
-package com.graczek.checkers;
+package com.graczek.checkers.enums;
 
 public enum BoardFieldColor {
     LIGHT, DARK;

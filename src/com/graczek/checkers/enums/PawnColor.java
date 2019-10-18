@@ -1,4 +1,4 @@
-package com.graczek.checkers;
+package com.graczek.checkers.enums;
 
 public enum PawnColor {
     RED(-1), BLACK(1);
@@ -6,6 +6,6 @@ public enum PawnColor {
     private final int movementDirection;
 
     PawnColor(int movementDirection) {
-        this.movementDirection = movementDirection;
+       this.movementDirection = movementDirection;
     }
 }

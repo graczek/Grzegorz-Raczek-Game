@@ -1,5 +1,7 @@
 package com.graczek.checkers;
 
+import com.graczek.checkers.enums.PawnColor;
+
 public class Pawn {
 
     private PawnColor pawnColor;
@@ -16,7 +18,7 @@ public class Pawn {
         return pawnColor;
     }
 
-    @Override
+        @Override
     public String toString() {
         return "Pawn{" +
                 "pawnColor=" + pawnColor +

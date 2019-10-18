@@ -1,5 +1,7 @@
 package com.graczek.checkers;
 
+import com.graczek.checkers.enums.BoardFieldColor;
+
 public class BoardField {
 
     private Pawn pawn;

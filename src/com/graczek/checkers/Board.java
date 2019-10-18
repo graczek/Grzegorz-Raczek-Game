@@ -1,13 +1,28 @@
 package com.graczek.checkers;
 
+import com.graczek.checkers.enums.BoardFieldColor;
+import com.graczek.checkers.enums.PawnColor;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
 
-    private static final int BOARD_WIDTH = 8;
-    private static final int BOARD_HEIGHT = 8;
+    //stores size of the checkers board
+    public static final int BOARD_SIZE = 8;
 
-    private Pawn pawn;
+    //stores fields which form the board
+    private BoardField[][] board = new BoardField[BOARD_SIZE][BOARD_SIZE];
 
-    private final BoardField[][] board = new BoardField[BOARD_WIDTH][BOARD_HEIGHT];
+    private List<Move> moveHistory = new ArrayList<>();
+
+    public BoardField[][] getBoard() {
+        return board;
+    }
+
+    public List<Move> getMoveHistory() {
+        return moveHistory;
+    }
 
     public void initializeEmptyBoard(){
         for (int x = 0; x < board.length ; x++) {
@@ -48,13 +63,25 @@ public class Board {
         return boardField.getBoardFieldColor() == BoardFieldColor.DARK;
     }
 
-    public void printBoard(){
+    private void printBoard(){
         for (int x = 0; x < board.length ; x++) {
             for (int y = 0; y < board.length; y++) {
                 System.out.print("[" + board[x][y] + "]");
             }
             System.out.println();
         }
+    }
+
+    //gets pawn from board based on given coordinates
+    public Pawn getPawnAt(Coordinate coordinate) {
+        BoardField boardField = board[coordinate.getX()][coordinate.getY()];
+        return boardField.getPawn();
+    }
+
+    //sets pawn on board based on given coordinates
+    public void setPawnAt(Pawn pawn, Coordinate coordinate) {
+        BoardField boardField = board[coordinate.getX()][coordinate.getY()];
+        boardField.setPawn(pawn);
     }
 
     public Pawn getPawn(int x, int y){
