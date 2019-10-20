@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -21,7 +22,6 @@ public class Main extends Application {
     private final int PAWN_SIZE = 68;
 
     private Board board = new Board();
-
 
     @Override
     public void start(Stage primaryStage) {
@@ -54,6 +54,7 @@ public class Main extends Application {
 
     }
 
+
     private void reprintBoard(GridPane grid, Board board) {
         for (int x = 0; x < BOARD_SIZE; x++) {
             for (int y = 0; y < BOARD_SIZE; y++) {
@@ -71,10 +72,20 @@ public class Main extends Application {
         ImageView pawn = new ImageView(pawnImage);
         pawn.setFitHeight(PAWN_SIZE);
         pawn.setFitWidth(PAWN_SIZE);
+        addClickability(pawn);
         return pawn;
+    }
+
+    private void addClickability(ImageView pawn){
+        pawn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            System.out.println("Pawn pressed!");
+            e.consume();
+        });
     }
 
     public static void main (String[]args){
         launch(args);
     }
+
+
 }
