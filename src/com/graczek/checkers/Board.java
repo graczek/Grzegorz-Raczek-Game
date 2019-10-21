@@ -1,11 +1,5 @@
 package com.graczek.checkers;
 
-import com.graczek.checkers.enums.BoardFieldColor;
-import com.graczek.checkers.enums.MoveType;
-import com.graczek.checkers.enums.PawnColor;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-
 public class Board {
 
 //    public static final int BOARD_SIZE = 8;

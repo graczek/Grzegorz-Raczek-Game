@@ -1,6 +1,5 @@
 package com.graczek.checkers;
 
-import com.graczek.checkers.enums.BoardFieldColor;
 import com.graczek.checkers.enums.MoveType;
 import com.graczek.checkers.enums.PawnColor;
 import javafx.application.Application;
@@ -20,6 +19,8 @@ public class Main extends Application {
 
     private BoardField[][] board = new BoardField[BOARD_SIZE][BOARD_SIZE];
 
+    private final int fieldSize = BoardField.FIELD_SIZE;
+
     private Group boardFields = new Group();
     private Group pawns = new Group();
 
@@ -30,26 +31,26 @@ public class Main extends Application {
         Background background = new Background(backgroundImage);
 
         GridPane grid = new GridPane();
-        grid.setPrefSize(BOARD_SIZE * BoardField.FIELD_SIZE, BOARD_SIZE * BoardField.FIELD_SIZE);
+        grid.setPrefSize(BOARD_SIZE * fieldSize, BOARD_SIZE * fieldSize);
         grid.setAlignment(Pos.CENTER);
         grid.setGridLinesVisible(true);
         grid.setBackground(background);
-        grid.getChildren().addAll(pawns);
+        grid.getChildren().addAll(boardFields, pawns);
 
         for (int y = 0; y < BOARD_SIZE ; y++) {
             for (int x = 0; x < BOARD_SIZE; x++) {
-                BoardField boardField = new BoardField((x + y) % 2 == 0 ? BoardFieldColor.LIGHT : BoardFieldColor.DARK, x, y);
+                BoardField boardField = new BoardField((x + y) % 2 == 0,  x, y);
                 board[x][y] = boardField;
 
                 boardFields.getChildren().add(boardField);
 
                 Pawn pawn = null;
 
-                if(y <= 2 && (x + y) % 2 != 0) {
-                    pawn = makePawn(PawnColor.BLACK, x, y);
+                if(isBoardUpperPart(y) && isFieldDark(x, y)) {
+                    pawn = makePawn(PawnColor.DARK, x, y);
                 }
-                if(y >= 5 && (x + y) % 2 != 0) {
-                    pawn = makePawn(PawnColor.RED, x, y);
+                if(isBoardBottomPart(y) && isFieldDark(x, y)) {
+                    pawn = makePawn(PawnColor.LIGHT, x, y);
                 }
                 if(pawn != null) {
                     boardField.setPawn(pawn);
@@ -62,8 +63,20 @@ public class Main extends Application {
 
     }
 
+    private boolean isBoardBottomPart(int y){
+        return y >= 5;
+    }
+
+    private boolean isBoardUpperPart(int y){
+        return y <= 2;
+    }
+
+    private boolean isFieldDark(int x, int y){
+        return (x + y) % 2 != 0;
+    }
+
     public Move tryMove(Pawn pawn, int newX, int newY) {
-        if(!board[newX][newY].isFieldEmpty() || (newX + newY) % 2 == 0 || !isWithinBoardRange(newX, newY)) {
+        if(!board[newX][newY].isEmpty() || (newX + newY) % 2 == 0 || !isWithinBoardRange(newX, newY)) {
             return new Move(MoveType.NONE);
         }
 
@@ -77,7 +90,7 @@ public class Main extends Application {
             int x1 = x0 + (newX - x0) / 2;
             int y1 = y0 + (newY - y0) / 2;
 
-            if(!board[x1][y1].isFieldEmpty() && board[x1][y1].getPawn().getPawnColor() != pawn.getPawnColor()) {
+            if(!board[x1][y1].isEmpty() && board[x1][y1].getPawn().getPawnColor() != pawn.getPawnColor()) {
                 return new Move(MoveType.CAPTURE, board[x1][y1].getPawn());
             }
         }
@@ -96,7 +109,13 @@ public class Main extends Application {
             int newX = translate(pawn.getLayoutX());
             int newY = translate(pawn.getLayoutY());
 
-            Move moveResult = tryMove(pawn, newX, newY);
+            Move moveResult;
+
+            if(newX < 0 || newY < 0 || newX >= BOARD_SIZE || newY >= BOARD_SIZE) {
+                moveResult = new Move(MoveType.NONE);
+            } else {
+                moveResult = tryMove(pawn, newX, newY);
+            }
 
             int x0 = translate(pawn.getOldMouseX());
             int y0 = translate(pawn.getOldMouseY());
@@ -117,6 +136,7 @@ public class Main extends Application {
 
                     Pawn otherPawn = moveResult.getPawn();
                     board[translate(otherPawn.getOldMouseX())][translate(otherPawn.getOldMouseY())].setPawn(null);
+                    pawns.getChildren().remove(otherPawn);
                     break;
             }
 
@@ -126,7 +146,7 @@ public class Main extends Application {
     }
 
     private int translate(double px) {
-        return (int)(px + Pawn.PAWN_SIZE / 2) / Pawn.PAWN_SIZE;
+        return (int)(px + fieldSize / 2) / fieldSize;
     }
 
     @Override
@@ -138,18 +158,6 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
-
-
-
-
-//        for (int i = 0; i < Board.BOARD_SIZE; i++) {
-//            grid.getColumnConstraints().add(new ColumnConstraints(BoardField.FIELD_SIZE));
-//            grid.getRowConstraints().add(new RowConstraints(BoardField.FIELD_SIZE));
-//        }
-//
-//        board.initializeEmptyBoard();
-//        board.initializeBoardWithStartingPawnSetup();
-        //board.reprintBoard(grid, board);
 
     }
 

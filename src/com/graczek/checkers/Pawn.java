@@ -10,7 +10,7 @@ public class Pawn extends GridPane {
     private double mouseX, mouseY;
     private double oldMouseX, oldMouseY;
 
-    public static final int PAWN_SIZE = 61;
+    private final int fieldSize = BoardField.FIELD_SIZE;
 
     private PawnColor pawnColor;
 
@@ -20,21 +20,21 @@ public class Pawn extends GridPane {
 
         move(x, y);
 
-        Ellipse bg = new Ellipse(PAWN_SIZE * 0.3125, PAWN_SIZE * 0.26);
-        bg.setFill(Color.GRAY);
+        Ellipse bg = new Ellipse(fieldSize * 0.3125, fieldSize * 0.26);
+        bg.setFill(Color.BLACK);
         bg.setStroke(Color.BLACK);
-        bg.setStrokeWidth(PAWN_SIZE * 0.03);
+        bg.setStrokeWidth(fieldSize * 0.03);
 
-        bg.setTranslateX((PAWN_SIZE - PAWN_SIZE * 0.3125 * 2) / 2);
-        bg.setTranslateY((PAWN_SIZE - PAWN_SIZE * 0.26 * 2) / 2 + PAWN_SIZE * 0.07);
+        bg.setTranslateX((fieldSize - fieldSize * 0.3125 * 2) / 2);
+        bg.setTranslateY((fieldSize - fieldSize * 0.26 * 2) / 2 + fieldSize * 0.07);
 
-        Ellipse ellipse = new Ellipse(PAWN_SIZE * 0.3125, PAWN_SIZE * 0.26);
-        ellipse.setFill(pawnColor == PawnColor.RED ? Color.RED : Color.BLACK);
+        Ellipse ellipse = new Ellipse(fieldSize * 0.3125, fieldSize * 0.26);
+        ellipse.setFill(pawnColor == PawnColor.LIGHT ? Color.BROWN : Color.DARKOLIVEGREEN);
         ellipse.setStroke(Color.BLACK);
-        ellipse.setStrokeWidth(PAWN_SIZE * 0.03);
+        ellipse.setStrokeWidth(fieldSize * 0.03);
 
-        ellipse.setTranslateX((PAWN_SIZE - PAWN_SIZE * 0.3125 * 2) / 2);
-        ellipse.setTranslateY((PAWN_SIZE - PAWN_SIZE * 0.26 * 2) / 2);
+        ellipse.setTranslateX((fieldSize - fieldSize * 0.3125 * 2) / 2);
+        ellipse.setTranslateY((fieldSize - fieldSize * 0.26 * 2) / 2);
 
         getChildren().addAll(bg, ellipse);
 
@@ -61,8 +61,8 @@ public class Pawn extends GridPane {
     }
 
     public void move(int x, int y){
-        oldMouseX = x * PAWN_SIZE;
-        oldMouseY = y * PAWN_SIZE;
+        oldMouseX = x * fieldSize;
+        oldMouseY = y * fieldSize;
         relocate(oldMouseX, oldMouseY);
     }
 

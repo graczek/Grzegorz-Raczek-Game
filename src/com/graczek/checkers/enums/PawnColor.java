@@ -1,7 +1,7 @@
 package com.graczek.checkers.enums;
 
 public enum PawnColor {
-    RED(-1), BLACK(1);
+    LIGHT(-1), DARK(1);
 
     public final int movementDirection;
 
