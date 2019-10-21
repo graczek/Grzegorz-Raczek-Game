@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class CheckersMain extends Application {
 
-    private Image backImage = new Image("background.jpg");
+    private Image backImage = new Image("file:resources/background.png");
 
     public static final int BOARD_SIZE = 8;
 
@@ -36,6 +36,7 @@ public class CheckersMain extends Application {
         grid.setGridLinesVisible(true);
         grid.setBackground(background);
         grid.getChildren().addAll(boardFields, pawns);
+
 
         for (int y = 0; y < BOARD_SIZE ; y++) {
             for (int x = 0; x < BOARD_SIZE; x++) {

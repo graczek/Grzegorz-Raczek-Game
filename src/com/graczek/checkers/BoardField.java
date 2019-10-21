@@ -25,6 +25,7 @@ public class BoardField extends Rectangle {
         setWidth(FIELD_SIZE);
         setHeight(FIELD_SIZE);
         relocate(x * FIELD_SIZE, y * FIELD_SIZE);
-        setFill(isDark ? Color.valueOf("#BD995B") : Color.valueOf("#5D3A21"));
+        setOpacity(0);
+        //setFill(isDark ? Color.valueOf("#BD995B") : Color.valueOf("#5D3A21"));
     }
 }
