@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class CheckersMain extends Application {
 
     private Image backImage = new Image("background.jpg");
 
@@ -75,7 +75,7 @@ public class Main extends Application {
         return (x + y) % 2 != 0;
     }
 
-    public Move tryMove(Pawn pawn, int newX, int newY) {
+    public Move attemptMove(Pawn pawn, int newX, int newY) {
         if(!board[newX][newY].isEmpty() || (newX + newY) % 2 == 0 || !isWithinBoardRange(newX, newY)) {
             return new Move(MoveType.NONE);
         }
@@ -85,7 +85,7 @@ public class Main extends Application {
 
         if(Math.abs(newX - x0) == 1 && newY - y0 == pawn.getPawnColor().movementDirection) {
             return new Move(MoveType.NORMAL);
-        } else if (Math.abs(newX - x0) == 2 && newY - y0 == pawn.getPawnColor().movementDirection *2) {
+        } else if (Math.abs(newX - x0) == 2 && newY - y0 == pawn.getPawnColor().movementDirection * 2) {
 
             int x1 = x0 + (newX - x0) / 2;
             int y1 = y0 + (newY - y0) / 2;
@@ -109,13 +109,7 @@ public class Main extends Application {
             int newX = translate(pawn.getLayoutX());
             int newY = translate(pawn.getLayoutY());
 
-            Move moveResult;
-
-            if(newX < 0 || newY < 0 || newX >= BOARD_SIZE || newY >= BOARD_SIZE) {
-                moveResult = new Move(MoveType.NONE);
-            } else {
-                moveResult = tryMove(pawn, newX, newY);
-            }
+            Move moveResult = attemptMove(pawn, newX, newY);
 
             int x0 = translate(pawn.getOldMouseX());
             int y0 = translate(pawn.getOldMouseY());
