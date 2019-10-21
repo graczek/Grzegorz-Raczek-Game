@@ -1,16 +1,24 @@
 package com.graczek.checkers;
 
 import com.graczek.checkers.enums.BoardFieldColor;
+import javafx.scene.shape.Rectangle;
 
-public class BoardField {
+public class BoardField extends Rectangle {
 
-    private Pawn pawn;
+    public static final int FIELD_SIZE = 68;
 
     private BoardFieldColor boardFieldColor;
     private int x;
     private int y;
 
+    private Pawn pawn;
+
     public BoardField(BoardFieldColor boardFieldColor, int x, int y) {
+        setWidth(FIELD_SIZE);
+        setHeight(FIELD_SIZE);
+
+        relocate(x * FIELD_SIZE, y * FIELD_SIZE);
+
         this.boardFieldColor = boardFieldColor;
         this.x = x;
         this.y = y;
