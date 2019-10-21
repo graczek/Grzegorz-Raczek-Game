@@ -1,30 +1,51 @@
 package com.graczek.checkers;
 
 import com.graczek.checkers.enums.PawnColor;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 
 public class Pawn extends GridPane {
-
-    private Image blackPawn = new Image("blackpawn.png");
-    private Image redPawn = new Image("redpawn.png");
 
     private double mouseX, mouseY;
     private double oldMouseX, oldMouseY;
 
-    public static final int PAWN_SIZE = 68;
+    public static final int PAWN_SIZE = 61;
 
     private PawnColor pawnColor;
-    private int x;
-    private int y;
 
     public Pawn(PawnColor pawnColor, int x, int y) {
+
         this.pawnColor = pawnColor;
-        this.x = x;
-        this.y = y;
 
         move(x, y);
+
+        Ellipse bg = new Ellipse(PAWN_SIZE * 0.3125, PAWN_SIZE * 0.26);
+        bg.setFill(Color.GRAY);
+        bg.setStroke(Color.BLACK);
+        bg.setStrokeWidth(PAWN_SIZE * 0.03);
+
+        bg.setTranslateX((PAWN_SIZE - PAWN_SIZE * 0.3125 * 2) / 2);
+        bg.setTranslateY((PAWN_SIZE - PAWN_SIZE * 0.26 * 2) / 2 + PAWN_SIZE * 0.07);
+
+        Ellipse ellipse = new Ellipse(PAWN_SIZE * 0.3125, PAWN_SIZE * 0.26);
+        ellipse.setFill(pawnColor == PawnColor.RED ? Color.RED : Color.BLACK);
+        ellipse.setStroke(Color.BLACK);
+        ellipse.setStrokeWidth(PAWN_SIZE * 0.03);
+
+        ellipse.setTranslateX((PAWN_SIZE - PAWN_SIZE * 0.3125 * 2) / 2);
+        ellipse.setTranslateY((PAWN_SIZE - PAWN_SIZE * 0.26 * 2) / 2);
+
+        getChildren().addAll(bg, ellipse);
+
+        setOnMousePressed(e -> {
+            mouseX = e.getSceneX();
+            mouseY = e.getSceneY();
+        });
+
+        setOnMouseDragged(e -> {
+            relocate(e.getSceneX() - mouseX + oldMouseX, e.getSceneY() - mouseY + oldMouseY);
+        });
     }
 
     public double getOldMouseX() {
@@ -39,44 +60,14 @@ public class Pawn extends GridPane {
         return pawnColor;
     }
 
-    public ImageView createPawn (boolean isDark) {
-        Image pawnImage = isDark ? blackPawn : redPawn;
-        ImageView pawn = new ImageView(pawnImage);
-        pawn.setFitHeight(PAWN_SIZE);
-        pawn.setFitWidth(PAWN_SIZE);
-        addClickability(pawn);
-        return pawn;
-    }
-
-    private void addClickability(ImageView pawn){
-        pawn.setOnMousePressed(e -> {
-            oldMouseX = e.getSceneX();
-            oldMouseY = e.getSceneY();
-        });
-
-        pawn.setOnMouseDragged(e -> {
-            pawn.setTranslateX(e.getSceneX() - oldMouseX);
-            pawn.setTranslateY(e.getSceneY() - oldMouseY);
-        });
-
-//        pawn.setOnMouseReleased(e -> {
-//            mouseX = e.getSceneX();
-//            mouseY = e.getSceneY();
-//        });
-    }
-
     public void move(int x, int y){
         oldMouseX = x * PAWN_SIZE;
         oldMouseY = y * PAWN_SIZE;
         relocate(oldMouseX, oldMouseY);
     }
 
-    @Override
-    public String toString() {
-        return "Pawn{" +
-                "pawnColor=" + pawnColor +
-                ", x=" + x +
-                ", y=" + y +
-                '}';
+    public void abortMove() {
+        relocate(oldMouseX, oldMouseY);
     }
+
 }
